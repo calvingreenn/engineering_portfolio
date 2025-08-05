@@ -84,8 +84,7 @@
         }
 
         .nav-links a {
-            color: #1d1d1f;
-            text-decoration: none;
+            color: #1d1d1f; /* Re-apply specific color for nav links */
             padding: 0.5rem 1rem;
             font-weight: 400;
             font-size: 1.1em;
@@ -209,7 +208,6 @@
 
         .document-button {
             color: #007aff;
-            text-decoration: none;
             font-weight: 500;
             padding: 14px 28px;
             border: 2px solid #007aff;
@@ -331,15 +329,22 @@
             font-size: 0.95em;
         }
 
-        /* Added style for links within the contact section */
+        /* NEW: Universal link styling - removes underlines by default */
+        a {
+            text-decoration: none;
+            color: inherit; /* Inherit color from parent unless specifically set later */
+        }
+
+        /* Adjusted style for links within the contact section to remove underline by default */
         .content-section a {
             color: #007aff; /* Standard link color */
-            text-decoration: underline; /* Underline links */
             transition: color 0.3s ease;
         }
 
+        /* Optional: Add underline on hover for contact links to make them more discoverable */
         .content-section a:hover {
             color: #0056d6; /* Darker blue on hover */
+            text-decoration: underline; /* Add underline only on hover */
         }
 
 
@@ -443,12 +448,13 @@
         </section>
         <section id="thoughts" class="content-section">
             <h3>Thoughts</h3>
-            <p>Exploring the intersection of philosophy, technology, and the future of learning in an AI-driven world.</p>
+            <p>Examining the spaces between philosophy, technology and the future</p>
             <a href="#" class="document-button" id="education-doc-btn">📚 Read: On Education and the Future</a>
         </section>
         <section id="interests" class="content-section">
             <h3>Interests</h3>
             <p>Exploring my passions in engineering and beyond.</p>
+            <a href="#" class="document-button" id="computation-doc-btn">📊 Read: The Global Race for Computation</a>
         </section>
         <section id="education" class="content-section">
             <h3>Education</h3>
@@ -569,48 +575,66 @@
                 <li>Semantic HTML with proper heading hierarchy</li>
                 <li>Modular CSS with logical organization</li>
                 <li>Event-driven JavaScript with clear separation of concerns</li>
-                <li>Progressive enhancement approach for core functionality</li>
+                <li>Progressive enhancement approach for core functionality.</li>
             </ul>
             
             <h3>Results and Metrics</h3>
             <p><strong>Performance:</strong></p>
             <ul>
-                <li>Fast loading times with optimized assets</li>
-                <li>Smooth animations at 60fps</li>
-                <li>Mobile-friendly responsive design</li>
-                <li>Cross-browser compatibility</li>
+                <li>Fast loading times with optimized assets.</li>
+                <li>Smooth animations at 60fps.</li>
+                <li>Mobile-friendly responsive design.</li>
+                <li>Cross-browser compatibility.</li>
             </ul>
             <p><strong>User Experience:</strong></p>
             <ul>
-                <li>Intuitive navigation with clear visual hierarchy</li>
-                <li>Engaging interactive elements</li>
-                <li>Professional presentation of content</li>
-                <li>Easy access to documents and contact information</li>
+                <li>Intuitive navigation with clear visual hierarchy.</li>
+                <li>Engaging interactive elements.</li>
+                <li>Professional presentation of content.</li>
+                <li>Easy access to documents and contact information.</li>
             </ul>
             
             <h3>Future Enhancements</h3>
             <p>Planned improvements include:</p>
             <ul>
-                <li>Integration with a content management system</li>
-                <li>Blog functionality for regular updates</li>
-                <li>Project gallery with filtering capabilities</li>
-                <li>Enhanced SEO optimization</li>
-                <li>Dark mode theme option</li>
+                <li>Integration with a content management system.</li>
+                <li>Blog functionality for regular updates.</li>
+                <li>Project gallery with filtering capabilities.</li>
+                <li>Enhanced SEO optimization.</li>
+                <li>Dark mode theme option.</li>
             </ul>
             
             <h3>Technologies Learned</h3>
             <p>This project deepened my understanding of:</p>
             <ul>
-                <li>Modern CSS techniques and animations</li>
-                <li>Vanilla JavaScript DOM manipulation</li>
-                <li>Responsive web design principles</li>
-                <li>User experience design</li>
-                <li>Web performance optimization</li>
+                <li>Modern CSS techniques and animations.</li>
+                <li>Vanilla JavaScript DOM manipulation.</li>
+                <li>Responsive web design principles.</li>
+                <li>User experience design.</li>
+                <li>Web performance optimization.</li>
             </ul>
             
             <h3>Conclusion</h3>
             <p>Building this personal website provided valuable experience in full-stack web development, from initial design concepts through implementation and optimization. The project demonstrates proficiency in modern web technologies while creating a platform for sharing my engineering work and thoughts on technology's future.</p>
             <p>The website successfully balances aesthetic appeal with functional requirements, creating an engaging user experience that effectively communicates my professional identity and technical capabilities.</p>
+        </div>
+    </div>
+
+    <div id="computationModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>The Global Race for Computation</h2>
+            <p>As of writing this in the summer of 2025, it feels like the world is in the middle of a construction boom that nobody's really talking about. Not for housing, not for commercial real estate-but for data centers. These things are popping up everywhere. Microsoft's spending over $50 billion this year alone to build out infrastructure that can support Al growth. Amazon, Google, Meta-same story. It's like everyone woke up at once and realized the only way to survive the Al explosion is to own the digital land it lives on.</p>
+            <p>And when I say land, I mean literal land. Thousands of acres are being scooped up across the U.S., Scandinavia, Chile, you name it. These aren't some sleek buildings you see in tech company promo videos. They're massive, power-hungry, water-cooled beasts. We're talking about server factories the size of airports. Places like Iowa and northern Sweden-once considered pretty off the radar-are turning into digital oil fields. Why? Because they've got space, power, and cool climates. All things you need when you're trying to run and cool a building stuffed with GPUs burning hotter than a jet engine.</p>
+            <p>This is important. I don't think people fully get what this means. This isn't just about making sure ChatGPT doesn't go down during finals week. This is about reshaping the actual structure of the global economy. These data centers are becoming the foundation for a new kind of industrial revolution. One where human labor isn't the bottleneck-it's computing power. Every future business, government, artist, and engineer is going to be dependent on a cloud of infrastructure built right now. And it's not just about Al, it's about everything: logistics, health care, energy grids, education-name an industry and it's probably about to get eaten by a data-hungry algorithm.</p>
+            <p>There's something poetic about it too. The cloud used to sound like this vague, magical thing. But it turns out it's made of concrete, steel, and wires. You can drive by it. It needs real people to build and run it. It consumes electricity like it's candy. It's messy. It's expensive. And it's absolutely necessary if we want to keep scaling the capabilities of Al.</p>
+            <p>This is all happening really fast. And the consequences are going to be huge. The places that get ahead on this-places with smart energy policy, fast permitting, and cheap land-are going to explode economically. They're going to attract tech jobs, investment, and long-term relevance. Countries that miss out might find themselves on the wrong side of a new kind of digital divide. A few regions will control most of the compute power, and that's going to matter a lot more than oil did in the 20th century.</p>
+            <p>So yeah, this might seem like a boring construction story. But it's not. It's the building of a new nervous system for the planet. And if you're someone who cares about the future-about education, access, equity, and innovation-then you should be paying very close attention to where these data centers are getting built and who controls them.</p>
+            <h3>Works Cited:</h3>
+            <p>"Big Tech's Race to Find Land for Al Data Centers." The Wall Street Journal, 2024.<br>
+            "Microsoft to Spend Billions on Data Centers for Al." Bloomberg, 2024.<br>
+            "Inside the Al Data Center Boom." CNBC, 2024.<br>
+            "The World's Growing Need for Data Infrastructure." Financial Times, 2023.</p>
         </div>
     </div>
 
@@ -626,10 +650,29 @@
             const diveBtn = document.getElementById('dive-btn');
             const educationDocBtn = document.getElementById('education-doc-btn');
             const websiteProjectBtn = document.getElementById('website-project-btn');
+            const computationDocBtn = document.getElementById('computation-doc-btn');
+
 
             const educationModal = document.getElementById('educationModal');
             const websiteProjectModal = document.getElementById('websiteProjectModal');
+            const computationModal = document.getElementById('computationModal');
             const closeModals = document.querySelectorAll('.close');
+
+            // Get header height for scroll offset
+            const header = document.querySelector('header');
+            let headerHeight = 0;
+            const scrollOffsetBuffer = 25; // Define a buffer in pixels to push the content down a bit more
+
+            function updateHeaderHeight() {
+                if (header) {
+                    headerHeight = header.offsetHeight + scrollOffsetBuffer; // Add the buffer
+                }
+            }
+
+            // Call initially and on window resize
+            updateHeaderHeight();
+            window.addEventListener('resize', updateHeaderHeight);
+
 
             // Home button functionality - scroll to top
             if (homeBtn) {
@@ -648,9 +691,9 @@
                     event.preventDefault();
                     const thoughtsSection = document.getElementById('thoughts');
                     if (thoughtsSection) {
-                        thoughtsSection.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'center'
+                        window.scrollTo({
+                            top: thoughtsSection.offsetTop - headerHeight, // Adjust for sticky header
+                            behavior: 'smooth'
                         });
                     }
                 });
@@ -673,6 +716,16 @@
                     document.body.style.overflow = 'hidden';
                 });
             }
+
+            // Computation document modal functionality
+            if (computationDocBtn && computationModal) {
+                computationDocBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    computationModal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
 
             // Close modal functionality for all modals
             closeModals.forEach(closeBtn => {
@@ -708,19 +761,25 @@
                 });
             }
 
+            // Loop through all anchor links with href starting with "#" (excluding modal buttons)
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                // Modified condition to only skip education-doc-btn and website-project-btn
-                // The resume link now directly goes to the PDF, so it doesn't need to be skipped here
-                if (anchor.id === 'home-btn' || anchor.id === 'education-doc-btn' || anchor.id === 'website-project-btn') return;
+                // Skip the home button and modal-opening buttons as they have specific handlers
+                if (anchor.id === 'home-btn' || anchor.id === 'education-doc-btn' || anchor.id === 'website-project-btn' || anchor.id === 'computation-doc-btn') return;
                 
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
+                    const targetId = this.getAttribute('href'); // e.g., "#thoughts"
+                    const target = document.querySelector(targetId);
+
                     if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
+                        // Calculate the target position with header offset
+                        const targetPosition = target.offsetTop - headerHeight;
+
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
                         });
+
                         // Close dropdown after clicking a link inside it
                         if (dropdownContent.classList.contains('show')) {
                             dropdownContent.classList.remove('show');
