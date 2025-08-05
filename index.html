@@ -84,7 +84,7 @@
         }
 
         .nav-links a {
-            color: #1d1d1f; /* Re-apply specific color for nav links */
+            color: #1d1d1f;
             padding: 0.5rem 1rem;
             font-weight: 400;
             font-size: 1.1em;
@@ -448,7 +448,7 @@
         </section>
         <section id="thoughts" class="content-section">
             <h3>Thoughts</h3>
-            <p>Examining the spaces between philosophy, technology and the future</p>
+            <p>Exploring the intersection of philosophy, technology, and the future of learning in an AI-driven world.</p>
             <a href="#" class="document-button" id="education-doc-btn">📚 Read: On Education and the Future</a>
         </section>
         <section id="interests" class="content-section">
@@ -572,9 +572,9 @@
             <h3>Code Organization</h3>
             <p>The project follows a clean, maintainable structure:</p>
             <ul>
-                <li>Semantic HTML with proper heading hierarchy</li>
-                <li>Modular CSS with logical organization</li>
-                <li>Event-driven JavaScript with clear separation of concerns</li>
+                <li>Semantic HTML with proper heading hierarchy.</li>
+                <li>Modular CSS with logical organization.</li>
+                <li>Event-driven JavaScript with clear separation of concerns.</li>
                 <li>Progressive enhancement approach for core functionality.</li>
             </ul>
             
@@ -701,114 +701,4 @@
 
             // Education document modal functionality
             if (educationDocBtn && educationModal) {
-                educationDocBtn.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    educationModal.style.display = 'block';
-                    document.body.style.overflow = 'hidden';
-                });
-            }
-
-            // Website project modal functionality
-            if (websiteProjectBtn && websiteProjectModal) {
-                websiteProjectBtn.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    websiteProjectModal.style.display = 'block';
-                    document.body.style.overflow = 'hidden';
-                });
-            }
-
-            // Computation document modal functionality
-            if (computationDocBtn && computationModal) {
-                computationDocBtn.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    computationModal.style.display = 'block';
-                    document.body.style.overflow = 'hidden';
-                });
-            }
-
-
-            // Close modal functionality for all modals
-            closeModals.forEach(closeBtn => {
-                closeBtn.addEventListener('click', function() {
-                    const modal = this.closest('.modal');
-                    if (modal) {
-                        modal.style.display = 'none';
-                        document.body.style.overflow = 'auto';
-                    }
-                });
-            });
-
-            // Close modal when clicking outside of it for all modals
-            window.addEventListener('click', function(event) {
-                if (event.target.classList.contains('modal')) {
-                    event.target.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }
-            });
-
-            if (dropbtn && dropdownContent) {
-                dropbtn.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    dropdownContent.classList.toggle('show');
-                });
-
-                window.addEventListener('click', function(event) {
-                    if (!event.target.matches('.dropbtn') && !event.target.closest('.dropdown-content')) {
-                        if (dropdownContent.classList.contains('show')) {
-                            dropdownContent.classList.remove('show');
-                        }
-                    }
-                });
-            }
-
-            // Loop through all anchor links with href starting with "#" (excluding modal buttons)
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                // Skip the home button and modal-opening buttons as they have specific handlers
-                if (anchor.id === 'home-btn' || anchor.id === 'education-doc-btn' || anchor.id === 'website-project-btn' || anchor.id === 'computation-doc-btn') return;
-                
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href'); // e.g., "#thoughts"
-                    const target = document.querySelector(targetId);
-
-                    if (target) {
-                        // Calculate the target position with header offset
-                        const targetPosition = target.offsetTop - headerHeight;
-
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-
-                        // Close dropdown after clicking a link inside it
-                        if (dropdownContent.classList.contains('show')) {
-                            dropdownContent.classList.remove('show');
-                        }
-                    }
-                });
-            });
-
-            const contentSections = document.querySelectorAll('.content-section');
-            contentSections.forEach(section => {
-                section.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px)';
-                    this.style.boxShadow = '0 12px 50px rgba(0, 0, 0, 0.12)';
-                });
-                
-                section.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                    this.style.boxShadow = '0 8px 40px rgba(0, 0, 0, 0.08)';
-                });
-            });
-
-            window.addEventListener('scroll', function() {
-                const scrolled = window.pageYOffset;
-                const heroSection = document.querySelector('.hero-section');
-                if (heroSection) {
-                    heroSection.style.transform = `translateY(${scrolled * 0.1}px)`;
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+                education
