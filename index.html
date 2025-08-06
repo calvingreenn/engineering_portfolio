@@ -652,7 +652,6 @@
             const websiteProjectBtn = document.getElementById('website-project-btn');
             const computationDocBtn = document.getElementById('computation-doc-btn');
 
-
             const educationModal = document.getElementById('educationModal');
             const websiteProjectModal = document.getElementById('websiteProjectModal');
             const computationModal = document.getElementById('computationModal');
@@ -661,11 +660,11 @@
             // Get header height for scroll offset
             const header = document.querySelector('header');
             let headerHeight = 0;
-            const scrollOffsetBuffer = 25; // Define a buffer in pixels to push the content down a bit more
+            const scrollOffsetBuffer = 20; // Reduced buffer for more precise positioning
 
             function updateHeaderHeight() {
                 if (header) {
-                    headerHeight = header.offsetHeight + scrollOffsetBuffer; // Add the buffer
+                    headerHeight = header.offsetHeight + scrollOffsetBuffer;
                 }
             }
 
@@ -673,6 +672,21 @@
             updateHeaderHeight();
             window.addEventListener('resize', updateHeaderHeight);
 
+            // Dropdown menu functionality
+            if (dropbtn && dropdownContent) {
+                dropbtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    dropdownContent.classList.toggle('show');
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!dropdown.contains(event.target)) {
+                        dropdownContent.classList.remove('show');
+                    }
+                });
+            }
 
             // Home button functionality - scroll to top
             if (homeBtn) {
@@ -691,8 +705,9 @@
                     event.preventDefault();
                     const thoughtsSection = document.getElementById('thoughts');
                     if (thoughtsSection) {
+                        const targetPosition = thoughtsSection.offsetTop - headerHeight;
                         window.scrollTo({
-                            top: thoughtsSection.offsetTop - headerHeight, // Adjust for sticky header
+                            top: targetPosition,
                             behavior: 'smooth'
                         });
                     }
@@ -701,4 +716,96 @@
 
             // Education document modal functionality
             if (educationDocBtn && educationModal) {
-                education
+                educationDocBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    educationModal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            // Website project modal functionality
+            if (websiteProjectBtn && websiteProjectModal) {
+                websiteProjectBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    websiteProjectModal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            // Computation document modal functionality
+            if (computationDocBtn && computationModal) {
+                computationDocBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    computationModal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            // Close modal functionality for all modals
+            closeModals.forEach(closeBtn => {
+                closeBtn.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    if (modal) {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+
+            // Close modal when clicking outside of it for all modals
+            window.addEventListener('click', function(event) {
+                if (event.target.classList.contains('modal')) {
+                    event.target.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Enhanced smooth scrolling for dropdown navigation links
+            document.querySelectorAll('.dropdown-content a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href'); // e.g., "#thoughts"
+                    const target = document.querySelector(targetId);
+
+                    if (target) {
+                        // Close dropdown first
+                        dropdownContent.classList.remove('show');
+                        
+                        // Wait a moment for dropdown to close, then scroll
+                        setTimeout(() => {
+                            const targetPosition = target.offsetTop - headerHeight;
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+                        }, 100);
+                    }
+                });
+            });
+
+            // Add hover effects to content sections
+            const contentSections = document.querySelectorAll('.content-section');
+            contentSections.forEach(section => {
+                section.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 12px 50px rgba(0, 0, 0, 0.12)';
+                });
+                
+                section.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 8px 40px rgba(0, 0, 0, 0.08)';
+                });
+            });
+
+            // Parallax effect for hero section
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const heroSection = document.querySelector('.hero-section');
+                if (heroSection) {
+                    heroSection.style.transform = `translateY(${scrolled * 0.1}px)`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
