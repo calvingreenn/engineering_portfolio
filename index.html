@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calvin Green | Engineering Projects</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Lora', serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -432,6 +435,7 @@
                         <a href="#interests">Interests</a>
                         <a href="#education">Education</a>
                         <a href="#projects">Projects</a>
+                        <a href="#about">About</a>
                         <a href="#contact">Contact</a>
                     </div>
                 </li>
@@ -446,6 +450,7 @@
                 <button id="dive-btn">Dive Into My Work</button>
             </div>
         </section>
+        
         <section id="thoughts" class="content-section">
             <h3>Thoughts</h3>
             <p>Exploring the intersection of philosophy, technology, and the future of learning in an AI-driven world.</p>
@@ -466,12 +471,31 @@
             <p>A showcase of my engineering projects and development work.</p>
             <a href="#" class="document-button" id="website-project-btn">🌐 Read: How I Built This Website</a>
         </section>
+        
+        <section id="about" class="content-section">
+            <h3>About Me</h3>
+            <p>It's been one long ride.</p>
+            <a href="#" class="document-button" id="about-doc-btn">📖 Read My Full Story</a> 
+        </section>
+        
         <section id="contact" class="content-section">
             <h3>Contact</h3>
             <p>LinkedIn : <a href="https://www.linkedin.com/in/calvin-green-8812b1312" target="_blank">www.linkedin.com/in/calvin-green-8812b1312</a></p>
             <p>Email : greencalvin2002@gmail.com</p>
         </section>
     </main>
+
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>About Me</h2>
+            <p>I am currently a student at Oregon State University pursuing a Bachelor of Science in Mechanical Engineering. My professional passions lie at the intersection of technology, design, and innovation. I am driven by a desire to understand complex systems and to create elegant, efficient solutions to challenging problems.</p>
+
+            <p>My academic journey has provided me with a strong foundation in mechanical principles, but my curiosity extends to the broader implications of technology on society. I'm particularly interested in the development of artificial intelligence, sustainable design practices, and the future of education in a rapidly changing world. My projects, both academic and personal, reflect this diverse range of interests.</p>
+
+            <p>Beyond my studies and engineering work, I enjoy exploring new ideas, whether through reading, writing, or engaging in thoughtful discussions. This website is a living portfolio—a place to document my journey, share my insights, and connect with other professionals and students who share a passion for building the future.</p>
+        </div>
+    </div>
 
     <div id="educationModal" class="modal">
         <div class="modal-content">
@@ -637,7 +661,6 @@
             <p>This is important. I don't think people fully get what this means. This isn't just about making sure ChatGPT doesn't go down during finals week. This is about reshaping the actual structure of the global economy. These data centers are becoming the foundation for a new kind of industrial revolution. One where human labor isn't the bottleneck-it's computing power. Every future business, government, artist, and engineer is going to be dependent on a cloud of infrastructure built right now. And it's not just about Al, it's about everything: logistics, health care, energy grids, education-name an industry and it's probably about to get eaten by a data-hungry algorithm.</p>
             <p>There's something poetic about it too. The cloud used to sound like this vague, magical thing. But it turns out it's made of concrete, steel, and wires. You can drive by it. It needs real people to build and run it. It consumes electricity like it's candy. It's messy. It's expensive. And it's absolutely necessary if we want to keep scaling the capabilities of Al.</p>
             <p>This is all happening really fast. And the consequences are going to be huge. The places that get ahead on this-places with smart energy policy, fast permitting, and cheap land-are going to explode economically. They're going to attract tech jobs, investment, and long-term relevance. Countries that miss out might find themselves on the wrong side of a new kind of digital divide. A few regions will control most of the compute power, and that's going to matter a lot more than oil did in the 20th century.</p>
-            <p>So yeah, this might seem like a boring construction story. But it's not. It's the building of a new nervous system for the planet. And if you're someone who cares about the future-about education, access, equity, and innovation-then you should be paying very close attention to where these data centers are getting built and who controls them.</p>
             <h3>Works Cited:</h3>
             <p>"Big Tech's Race to Find Land for Al Data Centers." The Wall Street Journal, 2024.<br>
             "Microsoft to Spend Billions on Data Centers for Al." Bloomberg, 2024.<br>
@@ -656,10 +679,14 @@
             const dropbtn = document.querySelector('.dropbtn');
             const homeBtn = document.getElementById('home-btn');
             const diveBtn = document.getElementById('dive-btn');
+
+            // Get references to all modal-related elements
+            const aboutDocBtn = document.getElementById('about-doc-btn');
             const educationDocBtn = document.getElementById('education-doc-btn');
             const websiteProjectBtn = document.getElementById('website-project-btn');
             const computationDocBtn = document.getElementById('computation-doc-btn');
-
+        
+            const aboutModal = document.getElementById('aboutModal');
             const educationModal = document.getElementById('educationModal');
             const websiteProjectModal = document.getElementById('websiteProjectModal');
             const computationModal = document.getElementById('computationModal');
@@ -668,7 +695,7 @@
             // Get header height for scroll offset
             const header = document.querySelector('header');
             let headerHeight = 0;
-            const scrollOffsetBuffer = 20; // Reduced buffer for more precise positioning
+            const scrollOffsetBuffer = 20;
 
             function updateHeaderHeight() {
                 if (header) {
@@ -688,7 +715,6 @@
                     dropdownContent.classList.toggle('show');
                 });
 
-                // Close dropdown when clicking outside
                 document.addEventListener('click', function(event) {
                     if (!dropdown.contains(event.target)) {
                         dropdownContent.classList.remove('show');
@@ -696,60 +722,60 @@
                 });
             }
 
-            // Home button functionality - scroll to top
+            // Function to handle smooth scrolling to a section
+            function smoothScrollTo(target) {
+                if (target) {
+                    const targetPosition = target.offsetTop - headerHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+
+            // Event listener for the "Home" button
             if (homeBtn) {
                 homeBtn.addEventListener('click', function(event) {
                     event.preventDefault();
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             }
 
-            // Dive Into My Work button functionality - scroll to thoughts section
+            // Event listener for the "Dive Into My Work" button
             if (diveBtn) {
                 diveBtn.addEventListener('click', function(event) {
                     event.preventDefault();
                     const thoughtsSection = document.getElementById('thoughts');
-                    if (thoughtsSection) {
-                        const targetPosition = thoughtsSection.offsetTop - headerHeight;
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
+                    smoothScrollTo(thoughtsSection);
                 });
             }
 
-            // Education document modal functionality
-            if (educationDocBtn && educationModal) {
-                educationDocBtn.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    educationModal.style.display = 'block';
-                    document.body.style.overflow = 'hidden';
+            // Event listeners for dropdown links (smooth scroll)
+            document.querySelectorAll('.dropdown-content a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const target = document.querySelector(targetId);
+                    dropdownContent.classList.remove('show');
+                    setTimeout(() => {
+                        smoothScrollTo(target);
+                    }, 100);
                 });
-            }
+            });
 
-            // Website project modal functionality
-            if (websiteProjectBtn && websiteProjectModal) {
-                websiteProjectBtn.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    websiteProjectModal.style.display = 'block';
-                    document.body.style.overflow = 'hidden';
-                });
+            // Function to open a modal
+            function openModal(modal) {
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
             }
+        
+            // Event listeners for document buttons (modal pop-up)
+            if (aboutDocBtn) aboutDocBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(aboutModal); });
+            if (educationDocBtn) educationDocBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(educationModal); });
+            if (websiteProjectBtn) websiteProjectBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(websiteProjectModal); });
+            if (computationDocBtn) computationDocBtn.addEventListener('click', (e) => { e.preventDefault(); openModal(computationModal); });
 
-            // Computation document modal functionality
-            if (computationDocBtn && computationModal) {
-                computationDocBtn.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    computationModal.style.display = 'block';
-                    document.body.style.overflow = 'hidden';
-                });
-            }
-
-            // Close modal functionality for all modals
+            // Close modal functionality
             closeModals.forEach(closeBtn => {
                 closeBtn.addEventListener('click', function() {
                     const modal = this.closest('.modal');
@@ -760,35 +786,12 @@
                 });
             });
 
-            // Close modal when clicking outside of it for all modals
+            // Close modal when clicking outside of it
             window.addEventListener('click', function(event) {
                 if (event.target.classList.contains('modal')) {
                     event.target.style.display = 'none';
                     document.body.style.overflow = 'auto';
                 }
-            });
-
-            // Enhanced smooth scrolling for dropdown navigation links
-            document.querySelectorAll('.dropdown-content a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href'); // e.g., "#thoughts"
-                    const target = document.querySelector(targetId);
-
-                    if (target) {
-                        // Close dropdown first
-                        dropdownContent.classList.remove('show');
-                        
-                        // Wait a moment for dropdown to close, then scroll
-                        setTimeout(() => {
-                            const targetPosition = target.offsetTop - headerHeight;
-                            window.scrollTo({
-                                top: targetPosition,
-                                behavior: 'smooth'
-                            });
-                        }, 100);
-                    }
-                });
             });
 
             // Add hover effects to content sections
