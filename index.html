@@ -466,6 +466,7 @@
             <h3>Thoughts</h3>
             <p>Exploring the intersection of philosophy, technology, and the future of learning in an AI-driven world.</p>
             <a href="#" class="document-button" id="education-doc-btn">Read: On Education and the Future</a>
+            <a href="#" class="document-button" id="critic-doc-btn">Read: AI and the Critic</a>
         </section>
         <section id="interests" class="content-section">
             <h3>Interests</h3>
@@ -512,6 +513,27 @@
             <p>What if AI turns out to be much more powerful than some anticipate? This could end up dystopic with many experts saying there is a non zero chance that AI will destroy the world. In that case we will not need an educational system. If that doesn't happen and AI is able to replicate human idea creation then the role of humans is going to be bizarre. The only things that will truly remain for humans, that I can think of, is child rearing, sport and art. Politics may still be a suitable occupation although there are many great debates on whether AI would be able to lead better than humans. These three (and a half) things will be at the center of education.</p>
             
             <p>These ideas make you think about what our meaning will be in the future. When humans are subject to being inferior what truly stands out about us? Sometimes I wonder if this angst that almost all humans have is a process of socialization. We must work, make money, have a family, buy a house, etc. It feels very pressurized. Like someone is breathing down your neck. If we taught our children in a different way will the burden of this angst be lifted away? If this is indeed the case then the next generations can finally focus on what makes them human.</p>
+        </div>
+    </div>
+
+    <div id="criticModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>AI and the Critic</h2>
+            <p style="text-align: center; color: #86868b; font-size: 1em; margin-bottom: 20px;">May 7, 2026</p>
+            <p><em>There are many ideas I leave unfinished in my short essays. I like to use the thoughts page to just jot down ideas that I may have. This creates an environment where I can think outside the box and try to focus on the extremes and crazy ideas without thinking about the details too much. Informal, fluid, and unorthodox.</em></p>
+
+            <p>I recently was using Google's new AI products and had it create a video for me that showed a beautiful woman playing a piano. This was the first time that AI has ever really grasped my attention from a video. The piano was beautiful, the song was crisp, and the movements were elegant. I sat there and watched the 6 second video probably 20 times while thinking about where this could go.</p>
+
+            <p>I try to explain how I think content will be consumed in the future by saying that we are currently creating things by pulling them from some idea space, maybe collaborating with other people, waiting for some inspiration, and working a piece over time to be consumed by others or for the feeling of self expression and uniqueness. I go on to say that in my own experience, when I am making something, I try a bunch of random things. For example, if I am painting I will mutilate a canvas until it reaches something that seems like it's at a stopping point. Or if I'm making a song I will layer different sounds to create a new sound that is just right for the vision I have or the memory I am creating in my mind. I am actively playing the role of a critic, using my body as the tool and my mind as the judge.</p>
+
+            <p>When I think of AI and how it created the video from the prompt, I noticed there was a similar process to how I shape my ideas when I create. I was judging the final output of the video until it reached a state of completion in my own mind. Completely customized. The insanity lies in scale. I picture someone in the future creating a painting that they really like. They worked very hard on it, and it is at the point where they say that it is theirs. Or they see another piece of work and are moved by it. Possibly, they will be able to upload data on that painting. Prompts, colors, sounds, and it can create more of it in that style in different mediums, and the artist will be able to mold it to be what they want it to be. You will basically have extremely customizable content at little cost, so everyone will be critiquing what they consume. Imagine you create a video but there's a blue cup in the background and you want it to be red. Now imagine that down to every pixel if you wanted to. It will be more of a minimizing act rather than a creating act due to excess information, although in the end it should reach the same state, assuming you have the general vision or feeling you want to express in your mind. There will naturally be some kind of marketplace where people share their work, and some creators' work will outperform others. This will create a new medium that is much richer than our current one, because cost will be low and competition and creative freedom will be high.</p>
+
+            <p>Now some people will say this is a disgrace and that AI can't make things that humans enjoy or can connect with, but I disagree. Right now it seems like it can't, but the human touch has not been deployed due to a lack of compute. Right now the cost of one 10 second video is between $0.50 and $5.00. There are still very interesting things being made, but they are mostly memes and ads because that is what fits into this time frame. Once humans have access to more compute, we will be able to have higher iterations of ideas at fractions of the cost. The future will be determined by the cost per token and the critic.</p>
+
+            <p>I can't stress enough the feeling of self expression, the vision, and having it more closely approximate this for more people through the process of critiquing. As compute scales, I think this will become more and more apparent to humans.</p>
+
+            <p>To conclude, I think the general way that humans create will still be viable. I just think there will be much more interesting content made in this way, and this will put pressure on the old ways of doing things, much like CGI did to the film industry. It will be beautiful.</p>
         </div>
     </div>
 
@@ -779,12 +801,14 @@
             const homeBtn = document.getElementById('home-btn');
             const diveBtn = document.getElementById('dive-btn');
             const educationDocBtn = document.getElementById('education-doc-btn');
+            const criticDocBtn = document.getElementById('critic-doc-btn');
             const websiteProjectBtn = document.getElementById('website-project-btn');
             const computationDocBtn = document.getElementById('computation-doc-btn');
             const basketballProjectBtn = document.getElementById('basketball-project-btn');
             const aboutMeBtn = document.getElementById('about-me-btn');
 
             const educationModal = document.getElementById('educationModal');
+            const criticModal = document.getElementById('criticModal');
             const websiteProjectModal = document.getElementById('websiteProjectModal');
             const computationModal = document.getElementById('computationModal');
             const basketballProjectModal = document.getElementById('basketballProjectModal');
@@ -853,6 +877,15 @@
                 educationDocBtn.addEventListener('click', function(event) {
                     event.preventDefault();
                     educationModal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            // AI and the Critic modal functionality
+            if (criticDocBtn && criticModal) {
+                criticDocBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    criticModal.style.display = 'block';
                     document.body.style.overflow = 'hidden';
                 });
             }
