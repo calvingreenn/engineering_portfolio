@@ -484,6 +484,7 @@
             <p>A showcase of my engineering projects and development work.</p>
             <a href="#" class="document-button" id="website-project-btn">Read: How I Built This Website</a>
             <a href="#" class="document-button" id="basketball-project-btn">Read: Basketball Shot Tracker</a>
+            <a href="#" class="document-button" id="econ-dashboard-btn">Read: Economic Health Dashboard</a>
         </section>
         <section id="about" class="content-section">
             <h3>About Me</h3>
@@ -754,6 +755,31 @@
         </div>
     </div>
 
+    <div id="econDashboardModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Economic Health Dashboard</h2>
+            <h3>Project Overview</h3>
+            <p>A Python tool I built that pulls live U.S. economic data from the Federal Reserve's FRED API and renders it as a clean, self-contained visual dashboard. It tracks 50+ indicators grouped the way economists actually think about them — leading, coincident, and lagging — and compares the national picture against Oregon, Washington, and California side by side. Each indicator gets a 24-month trend chart and a full-history chart, and where a widely-cited reference point exists (like the Fed's 2% inflation target) the dashboard shows how far current data sits from it.</p>
+            <p>The interesting engineering wasn't the charts — it was the judgment calls: choosing which indicators matter, deciding that California couldn't substitute for Oregon despite being a larger economy, and being honest about which indicators have a defensible "ideal" and which don't rather than inventing targets.</p>
+
+            <h3>Technical Stack</h3>
+            <ul>
+                <li>Python standard library only — no external dependencies</li>
+                <li>FRED API for macroeconomic time-series data</li>
+                <li>Hand-generated inline SVG for all charts (works offline, no chart library)</li>
+                <li>Self-contained HTML output — one file, opens in any browser</li>
+            </ul>
+
+            <h3>Sample Output</h3>
+            <p>The version below is a static sample. The live tool pulls current data using a private FRED API key, which can't be published on a static site, so the figures shown are realistic placeholders rather than current data.</p>
+            <p><a href="economic_dashboard_sample.html" target="_blank" class="document-button">View Sample Dashboard</a></p>
+
+            <h3>Conclusion</h3>
+            <p>This project started as a way to check the state of the economy at a glance without clicking through a dozen government websites. It turned into an exercise in data-source judgment, honest presentation of contested reference points, and building a zero-dependency tool that just works when you run it.</p>
+        </div>
+    </div>
+
     <div id="computationModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -805,6 +831,7 @@
             const websiteProjectBtn = document.getElementById('website-project-btn');
             const computationDocBtn = document.getElementById('computation-doc-btn');
             const basketballProjectBtn = document.getElementById('basketball-project-btn');
+            const econDashboardBtn = document.getElementById('econ-dashboard-btn');
             const aboutMeBtn = document.getElementById('about-me-btn');
 
             const educationModal = document.getElementById('educationModal');
@@ -812,6 +839,7 @@
             const websiteProjectModal = document.getElementById('websiteProjectModal');
             const computationModal = document.getElementById('computationModal');
             const basketballProjectModal = document.getElementById('basketballProjectModal');
+            const econDashboardModal = document.getElementById('econDashboardModal');
             const aboutMeModal = document.getElementById('aboutMeModal');
             const closeModals = document.querySelectorAll('.close');
 
@@ -913,6 +941,15 @@
                 basketballProjectBtn.addEventListener('click', function(event) {
                     event.preventDefault();
                     basketballProjectModal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            // Economic Dashboard modal functionality
+            if (econDashboardBtn && econDashboardModal) {
+                econDashboardBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    econDashboardModal.style.display = 'block';
                     document.body.style.overflow = 'hidden';
                 });
             }
