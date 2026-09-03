@@ -863,21 +863,20 @@
         <p>&copy; 2025 Calvin Green. All rights reserved.</p>
     </footer>
 
-    <!-- Digital-you chat widget -->
-    <div id="calvin-chat-btn" onclick="toggleCalvinChat()" title="Talk to Calvin">
-        <span id="calvin-chat-icon">💬</span>
+    <!-- Digital-you voice widget -->
+    <div id="calvin-chat-btn" onclick="toggleCalvinChat()">
+        Talk to the artificial intelligence of Calvin
     </div>
 
     <div id="calvin-chat-box">
         <div id="calvin-chat-header">
-            <span>Talk to Calvin</span>
+            <span>AI Calvin</span>
             <button onclick="toggleCalvinChat()" id="calvin-close-btn">✕</button>
         </div>
-        <div id="calvin-messages"></div>
-        <div id="calvin-input-row">
-            <button id="calvin-mic-btn" onclick="startListening()" title="Hold to speak">🎙</button>
-            <input id="calvin-text-input" type="text" placeholder="or type here..." onkeydown="if(event.key==='Enter')sendText()"/>
-            <button id="calvin-send-btn" onclick="sendText()">→</button>
+        <div id="calvin-voice-area">
+            <button id="calvin-mic-btn" onclick="startListening()">
+                <span id="calvin-mic-label">tap to speak</span>
+            </button>
         </div>
         <div id="calvin-status"></div>
     </div>
@@ -887,34 +886,36 @@
             position: fixed;
             bottom: 28px;
             right: 28px;
-            width: 56px;
-            height: 56px;
             background: #1d1d1f;
             color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
+            border-radius: 30px;
+            padding: 12px 20px;
+            font-size: 13px;
+            font-weight: 500;
             cursor: pointer;
             box-shadow: 0 4px 20px rgba(0,0,0,0.25);
             z-index: 9999;
             transition: transform 0.2s;
+            font-family: 'Inter', system-ui, sans-serif;
+            letter-spacing: 0.2px;
+            text-align: center;
+            max-width: 220px;
+            line-height: 1.4;
         }
-        #calvin-chat-btn:hover { transform: scale(1.08); }
+        #calvin-chat-btn:hover { transform: scale(1.04); }
 
         #calvin-chat-box {
             display: none;
             position: fixed;
-            bottom: 96px;
+            bottom: 110px;
             right: 28px;
-            width: 340px;
-            max-height: 480px;
+            width: 280px;
             background: #fff;
             border-radius: 16px;
             box-shadow: 0 8px 40px rgba(0,0,0,0.18);
             z-index: 9998;
             flex-direction: column;
+            align-items: center;
             overflow: hidden;
             font-family: 'Inter', system-ui, sans-serif;
         }
@@ -929,7 +930,8 @@
             align-items: center;
             font-size: 14px;
             font-weight: 600;
-            letter-spacing: 0.3px;
+            width: 100%;
+            box-sizing: border-box;
         }
         #calvin-close-btn {
             background: none;
@@ -941,87 +943,54 @@
             line-height: 1;
         }
 
-        #calvin-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 14px;
+        #calvin-voice-area {
+            padding: 32px 20px 24px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            min-height: 200px;
-            max-height: 300px;
+            align-items: center;
+            gap: 16px;
         }
 
-        .calvin-msg {
-            max-width: 85%;
-            padding: 9px 13px;
-            border-radius: 14px;
-            font-size: 14px;
-            line-height: 1.45;
-        }
-        .calvin-msg.user {
+        #calvin-mic-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
             background: #1d1d1f;
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-        }
-        .calvin-msg.calvin {
-            background: #f1f1f1;
-            color: #1d1d1f;
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-        }
-
-        #calvin-input-row {
+            border: none;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            padding: 10px 12px;
-            border-top: 1px solid #eee;
-            gap: 8px;
+            justify-content: center;
+            transition: background 0.2s, transform 0.15s;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
         }
-        #calvin-mic-btn {
-            background: none;
-            border: 1.5px solid #ddd;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.15s;
-            flex-shrink: 0;
-        }
+        #calvin-mic-btn:hover { transform: scale(1.05); }
         #calvin-mic-btn.listening {
             background: #ff3b30;
-            border-color: #ff3b30;
+            animation: pulse 1.2s infinite;
         }
-        #calvin-text-input {
-            flex: 1;
-            border: 1.5px solid #ddd;
-            border-radius: 20px;
-            padding: 8px 12px;
-            font-size: 13px;
-            outline: none;
-            font-family: inherit;
+        #calvin-mic-btn.speaking {
+            background: #34c759;
         }
-        #calvin-text-input:focus { border-color: #1d1d1f; }
-        #calvin-send-btn {
-            background: #1d1d1f;
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,59,48,0.4); }
+            50% { box-shadow: 0 0 0 12px rgba(255,59,48,0); }
+        }
+
+        #calvin-mic-label {
             color: white;
-            border: none;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            font-size: 18px;
-            cursor: pointer;
-            flex-shrink: 0;
+            font-size: 11px;
+            font-weight: 500;
+            text-align: center;
+            letter-spacing: 0.3px;
         }
 
         #calvin-status {
-            font-size: 11px;
+            font-size: 12px;
             color: #888;
             text-align: center;
-            padding: 0 12px 8px;
-            min-height: 18px;
+            padding: 0 16px 20px;
+            min-height: 20px;
         }
     </style>
 
@@ -1035,26 +1004,31 @@
             const box = document.getElementById('calvin-chat-box');
             box.classList.toggle('open');
             if (box.classList.contains('open') && chatHistory.length === 0) {
-                addMessage('calvin', 'hey, what\'s up?');
+                setStatus('tap the button and speak');
             }
-        }
-
-        function addMessage(role, text) {
-            const messages = document.getElementById('calvin-messages');
-            const div = document.createElement('div');
-            div.className = `calvin-msg ${role}`;
-            div.textContent = text;
-            messages.appendChild(div);
-            messages.scrollTop = messages.scrollHeight;
         }
 
         function setStatus(text) {
             document.getElementById('calvin-status').textContent = text;
         }
 
+        function setMicState(state) {
+            const btn = document.getElementById('calvin-mic-btn');
+            const label = document.getElementById('calvin-mic-label');
+            btn.className = '';
+            if (state === 'listening') {
+                btn.classList.add('listening');
+                label.textContent = 'listening...';
+            } else if (state === 'speaking') {
+                btn.classList.add('speaking');
+                label.textContent = 'speaking...';
+            } else {
+                label.textContent = 'tap to speak';
+            }
+        }
+
         async function sendMessage(text) {
             if (!text.trim()) return;
-            addMessage('user', text);
             chatHistory.push({ role: 'user', content: text });
             setStatus('thinking...');
 
@@ -1066,17 +1040,17 @@
                 });
                 const data = await res.json();
                 const reply = data.reply;
-                addMessage('calvin', reply);
                 chatHistory.push({ role: 'assistant', content: reply });
                 setStatus('');
                 await speakReply(reply);
             } catch (e) {
                 setStatus('something went wrong, try again');
+                setMicState('idle');
             }
         }
 
         async function speakReply(text) {
-            setStatus('🔊 speaking...');
+            setMicState('speaking');
             try {
                 const res = await fetch(`${WORKER_URL}/speak`, {
                     method: 'POST',
@@ -1093,22 +1067,14 @@
                 });
                 URL.revokeObjectURL(url);
             } catch (e) {
-                // voice failed silently — text still shows
+                // voice failed silently
             }
-            setStatus('');
-        }
-
-        function sendText() {
-            const input = document.getElementById('calvin-text-input');
-            const text = input.value.trim();
-            if (!text) return;
-            input.value = '';
-            sendMessage(text);
+            setMicState('idle');
         }
 
         function startListening() {
             if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-                setStatus('voice not supported in this browser — try Chrome');
+                setStatus('use Chrome or Safari for voice');
                 return;
             }
             if (isListening) {
@@ -1123,22 +1089,24 @@
 
             recognition.onstart = () => {
                 isListening = true;
-                document.getElementById('calvin-mic-btn').classList.add('listening');
-                setStatus('🎙 listening...');
+                setMicState('listening');
+                setStatus('');
             };
             recognition.onresult = (e) => {
                 const text = e.results[0][0].transcript;
+                setMicState('idle');
                 sendMessage(text);
             };
             recognition.onend = () => {
                 isListening = false;
-                document.getElementById('calvin-mic-btn').classList.remove('listening');
-                setStatus('');
+                if (document.getElementById('calvin-mic-btn').classList.contains('listening')) {
+                    setMicState('idle');
+                }
             };
             recognition.onerror = () => {
                 isListening = false;
-                document.getElementById('calvin-mic-btn').classList.remove('listening');
-                setStatus('mic error — check browser permissions');
+                setMicState('idle');
+                setStatus('mic error — allow microphone access');
             };
             recognition.start();
         }
