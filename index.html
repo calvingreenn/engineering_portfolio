@@ -862,6 +862,287 @@
     <footer>
         <p>&copy; 2025 Calvin Green. All rights reserved.</p>
     </footer>
+
+    <!-- Digital-you chat widget -->
+    <div id="calvin-chat-btn" onclick="toggleCalvinChat()" title="Talk to Calvin">
+        <span id="calvin-chat-icon">💬</span>
+    </div>
+
+    <div id="calvin-chat-box">
+        <div id="calvin-chat-header">
+            <span>Talk to Calvin</span>
+            <button onclick="toggleCalvinChat()" id="calvin-close-btn">✕</button>
+        </div>
+        <div id="calvin-messages"></div>
+        <div id="calvin-input-row">
+            <button id="calvin-mic-btn" onclick="startListening()" title="Hold to speak">🎙</button>
+            <input id="calvin-text-input" type="text" placeholder="or type here..." onkeydown="if(event.key==='Enter')sendText()"/>
+            <button id="calvin-send-btn" onclick="sendText()">→</button>
+        </div>
+        <div id="calvin-status"></div>
+    </div>
+
+    <style>
+        #calvin-chat-btn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 56px;
+            height: 56px;
+            background: #1d1d1f;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            z-index: 9999;
+            transition: transform 0.2s;
+        }
+        #calvin-chat-btn:hover { transform: scale(1.08); }
+
+        #calvin-chat-box {
+            display: none;
+            position: fixed;
+            bottom: 96px;
+            right: 28px;
+            width: 340px;
+            max-height: 480px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+            z-index: 9998;
+            flex-direction: column;
+            overflow: hidden;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        #calvin-chat-box.open { display: flex; }
+
+        #calvin-chat-header {
+            background: #1d1d1f;
+            color: white;
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        #calvin-close-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0;
+            line-height: 1;
+        }
+
+        #calvin-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-height: 200px;
+            max-height: 300px;
+        }
+
+        .calvin-msg {
+            max-width: 85%;
+            padding: 9px 13px;
+            border-radius: 14px;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+        .calvin-msg.user {
+            background: #1d1d1f;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .calvin-msg.calvin {
+            background: #f1f1f1;
+            color: #1d1d1f;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        #calvin-input-row {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            border-top: 1px solid #eee;
+            gap: 8px;
+        }
+        #calvin-mic-btn {
+            background: none;
+            border: 1.5px solid #ddd;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.15s;
+            flex-shrink: 0;
+        }
+        #calvin-mic-btn.listening {
+            background: #ff3b30;
+            border-color: #ff3b30;
+        }
+        #calvin-text-input {
+            flex: 1;
+            border: 1.5px solid #ddd;
+            border-radius: 20px;
+            padding: 8px 12px;
+            font-size: 13px;
+            outline: none;
+            font-family: inherit;
+        }
+        #calvin-text-input:focus { border-color: #1d1d1f; }
+        #calvin-send-btn {
+            background: #1d1d1f;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            font-size: 18px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        #calvin-status {
+            font-size: 11px;
+            color: #888;
+            text-align: center;
+            padding: 0 12px 8px;
+            min-height: 18px;
+        }
+    </style>
+
+    <script>
+        const WORKER_URL = "https://orange-darkness-1e4b.calvingreenn4.workers.dev";
+        let chatHistory = [];
+        let recognition = null;
+        let isListening = false;
+
+        function toggleCalvinChat() {
+            const box = document.getElementById('calvin-chat-box');
+            box.classList.toggle('open');
+            if (box.classList.contains('open') && chatHistory.length === 0) {
+                addMessage('calvin', 'hey, what\'s up?');
+            }
+        }
+
+        function addMessage(role, text) {
+            const messages = document.getElementById('calvin-messages');
+            const div = document.createElement('div');
+            div.className = `calvin-msg ${role}`;
+            div.textContent = text;
+            messages.appendChild(div);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function setStatus(text) {
+            document.getElementById('calvin-status').textContent = text;
+        }
+
+        async function sendMessage(text) {
+            if (!text.trim()) return;
+            addMessage('user', text);
+            chatHistory.push({ role: 'user', content: text });
+            setStatus('thinking...');
+
+            try {
+                const res = await fetch(`${WORKER_URL}/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text, history: chatHistory.slice(0, -1) })
+                });
+                const data = await res.json();
+                const reply = data.reply;
+                addMessage('calvin', reply);
+                chatHistory.push({ role: 'assistant', content: reply });
+                setStatus('');
+                await speakReply(reply);
+            } catch (e) {
+                setStatus('something went wrong, try again');
+            }
+        }
+
+        async function speakReply(text) {
+            setStatus('🔊 speaking...');
+            try {
+                const res = await fetch(`${WORKER_URL}/speak`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text })
+                });
+                const blob = await res.blob();
+                const url = URL.createObjectURL(blob);
+                const audio = new Audio(url);
+                await new Promise(resolve => {
+                    audio.onended = resolve;
+                    audio.onerror = resolve;
+                    audio.play();
+                });
+                URL.revokeObjectURL(url);
+            } catch (e) {
+                // voice failed silently — text still shows
+            }
+            setStatus('');
+        }
+
+        function sendText() {
+            const input = document.getElementById('calvin-text-input');
+            const text = input.value.trim();
+            if (!text) return;
+            input.value = '';
+            sendMessage(text);
+        }
+
+        function startListening() {
+            if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+                setStatus('voice not supported in this browser — try Chrome');
+                return;
+            }
+            if (isListening) {
+                recognition && recognition.stop();
+                return;
+            }
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onstart = () => {
+                isListening = true;
+                document.getElementById('calvin-mic-btn').classList.add('listening');
+                setStatus('🎙 listening...');
+            };
+            recognition.onresult = (e) => {
+                const text = e.results[0][0].transcript;
+                sendMessage(text);
+            };
+            recognition.onend = () => {
+                isListening = false;
+                document.getElementById('calvin-mic-btn').classList.remove('listening');
+                setStatus('');
+            };
+            recognition.onerror = () => {
+                isListening = false;
+                document.getElementById('calvin-mic-btn').classList.remove('listening');
+                setStatus('mic error — check browser permissions');
+            };
+            recognition.start();
+        }
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const dropdown = document.querySelector('.dropdown');
