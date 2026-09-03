@@ -999,8 +999,22 @@
         let chatHistory = [];
         let recognition = null;
         let isListening = false;
+        let audioUnlocked = false;
+
+        // Unlock audio context on first user interaction so autoplay works
+        function unlockAudio() {
+            if (audioUnlocked) return;
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            ctx.resume().then(() => { audioUnlocked = true; });
+            const silent = ctx.createBuffer(1, 1, 22050);
+            const src = ctx.createBufferSource();
+            src.buffer = silent;
+            src.connect(ctx.destination);
+            src.start();
+        }
 
         function toggleCalvinChat() {
+            unlockAudio();
             const box = document.getElementById('calvin-chat-box');
             box.classList.toggle('open');
             if (box.classList.contains('open') && chatHistory.length === 0) {
@@ -1073,6 +1087,7 @@
         }
 
         function startListening() {
+            unlockAudio();
             if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
                 setStatus('use Chrome or Safari for voice');
                 return;
